@@ -2,7 +2,6 @@ CREATE TABLE
     IF NOT EXISTS paths (
         id SERIAL PRIMARY KEY,
         user_id INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-        description TEXT,
         path GEOMETRY (LINESTRING, 4326) NOT NULL,
         polygon GEOMETRY (POLYGON, 4326) NOT NULL,
         -- The distance is based on the path

@@ -2,18 +2,29 @@ import FitToPosition from "@/components/domain/map/fit-to-position";
 import UserCurrentPositionMarker from "@/components/domain/map/user-current-position-marker";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, type ChangeEvent } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import Map, { Layer, Source } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { CameraIcon, PauseIcon, PlayIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useNewPath } from "@/hooks/use-new-path";
+import { toast } from "sonner";
+import * as turf from "@turf/turf";
 
 const Index = () => {
   const [has_started, set_has_started] = useState(false);
   const [is_paused, set_is_paused] = useState(false);
   const [coordinates, setCoordinates] = useState<[number, number][]>([]);
+  const [file, setFile] = useState<File | null>(null);
+
+  // Store the previous coordinate to mesure the average speed
+  const previous = useRef<GeolocationPosition | null>(null);
+
+  const { mutateAsync: create } = useNewPath();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!has_started) {
@@ -26,10 +37,43 @@ const Index = () => {
           return;
         }
 
+        let speed = 0;
+        if (previous.current) {
+          const distance = turf.distance(
+            turf.point([
+              previous.current.coords.longitude,
+              previous.current.coords.latitude,
+            ]),
+            turf.point([p.coords.longitude, p.coords.latitude]),
+            { units: "meters" },
+          );
+
+          // in seconds
+          const time = (p.timestamp - previous.current.timestamp) / 1000;
+
+          // meters per second
+          speed = distance / time;
+        }
+
+        if (speed > 6) {
+          setCoordinates([]);
+          set_has_started(false);
+          set_is_paused(false);
+
+          toast.warning(
+            "Vitesse trop élevée détectée. Le suivi est réinitialisé.",
+          );
+
+          previous.current = null;
+          return;
+        }
+
         setCoordinates((coords) => [
           ...coords,
           [p.coords.longitude, p.coords.latitude],
         ]);
+
+        previous.current = p;
       },
       (e) => console.error("Geolocation error:", e),
       {
@@ -51,7 +95,33 @@ const Index = () => {
       return;
     }
 
-    console.log(file);
+    setFile(file);
+  };
+
+  const submit = async () => {
+    if (!file) {
+      toast.error("Veuillez capturer une photo avant de soumettre le chemin.");
+      return;
+    }
+
+    await create(
+      {
+        coordinates,
+        picture: Array.from(await file.bytes()),
+        format: file.name.split(".").pop()!,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Chemin créé avec succès !");
+          set_has_started(false);
+
+          navigate({ to: "/" });
+        },
+        onError: () => {
+          toast.error("Échec de la création du chemin.");
+        },
+      },
+    );
   };
 
   return (
@@ -61,7 +131,7 @@ const Index = () => {
           <Button
             variant={"destructive"}
             className="flex-1 h-14 rounded-4xl"
-            onClick={() => set_has_started(false)}
+            onClick={() => submit()}
           >
             Terminer la collecte
           </Button>
@@ -142,7 +212,7 @@ const Index = () => {
         </Source>
 
         <UserCurrentPositionMarker />
-        <FitToPosition zoom={16} />
+        <FitToPosition zoom={17} />
       </Map>
     </div>
   );

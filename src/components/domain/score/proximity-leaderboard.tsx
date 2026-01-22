@@ -45,7 +45,10 @@ const ProximityLeaderboard = () => {
           {data && data.length > 0 ? (
             data.map((entry, index) => {
               return (
-                <SidebarMenuSubItem key={entry.id}>
+                <SidebarMenuSubItem
+                  className="flex items-center gap-2"
+                  key={entry.id}
+                >
                   {index < 3 ? (
                     <MedalIcon
                       className={cn(
@@ -72,7 +75,7 @@ const ProximityLeaderboard = () => {
                       index === 2 ? "bg-yellow-200 text-yellow-900" : "",
                     )}
                   >
-                    {entry.score} pts
+                    {entry.score} pts / lvl. {Math.max(entry.score % 100, 1)}
                   </SidebarMenuBadge>
                 </SidebarMenuSubItem>
               );
