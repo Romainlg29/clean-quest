@@ -10,7 +10,7 @@ COPY bun.lock bun.lock
 RUN bun install
 
 # Copy source files
-COPY ./api/src ./src
+COPY api/src ./src
 COPY tsconfig.json tsconfig.json
 
 # Specify production environment

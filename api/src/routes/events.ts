@@ -1,5 +1,5 @@
-import { database } from "@api/lib/database";
-import { tryCatch } from "@api/utils/try-catch";
+import { database } from "../lib/database";
+import { tryCatch } from "../utils/try-catch";
 import Elysia from "elysia";
 import { z } from "zod";
 import { create_event_schema } from "../schemas/events";
