@@ -6,7 +6,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import Map, { Layer, Source } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { CameraIcon, PauseIcon, PlayIcon } from "lucide-react";
+import { ArrowLeftIcon, CameraIcon, PauseIcon, PlayIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNewPath } from "@/hooks/use-new-path";
@@ -126,6 +126,17 @@ const Index = () => {
 
   return (
     <div className="relative w-full h-full flex flex-col">
+      <div className="absolute z-10 top-2 left-2">
+        <Button
+          variant={"outline"}
+          size={"icon"}
+          className="bg-white rounded-full"
+          onClick={() => navigate({ to: "/" })}
+        >
+          <ArrowLeftIcon className="size-5" />
+        </Button>
+      </div>
+
       <Card className="absolute z-10 bottom-0 left-0 w-full h-24 rounded-b-none px-2 py-4 flex flex-row gap-2">
         {has_started ? (
           <Button
