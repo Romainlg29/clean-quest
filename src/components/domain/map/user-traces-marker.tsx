@@ -50,9 +50,7 @@ const UserTracesMarker = () => {
 
               // Display each username only once
               .map((username) => (
-                <div key={username}>
-                  <p>{username}</p>
-                </div>
+                <p key={username}>{username}</p>
               ))}
           </div>
         </Marker>
