@@ -55,7 +55,7 @@ const Index = () => {
           speed = distance / time;
         }
 
-        if (speed > 6) {
+        if (speed > 60) {
           setCoordinates([]);
           set_has_started(false);
           set_is_paused(false);
