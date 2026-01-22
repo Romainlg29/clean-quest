@@ -38,7 +38,7 @@ const SignIn = () => {
       await signIn(value, {
         onSuccess: () => {
           toast.success("Connexion réussie !");
-          navigate({ to: "/home" });
+          navigate({ to: "/" });
         },
         onError: () => {
           toast.error("Échec de la connexion. Veuillez réessayer.");

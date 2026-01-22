@@ -26,6 +26,7 @@ const Home = () => {
         variant="inset"
         collapsible="none"
         style={{
+          // @ts-expect-error CSS variable
           "--sidebar-width": "24rem",
         }}
       >

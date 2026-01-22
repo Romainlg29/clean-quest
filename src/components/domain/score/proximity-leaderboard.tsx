@@ -10,7 +10,7 @@ import {
 import { useProximityLeaderboard } from "@/hooks/use-proximity-leaderboard";
 import { cn } from "@/lib/utils";
 import { useSearch } from "@tanstack/react-router";
-import { FrownIcon, HeartCrackIcon, MedalIcon, TrophyIcon } from "lucide-react";
+import { FrownIcon, MedalIcon, TrophyIcon } from "lucide-react";
 
 const ProximityLeaderboard = () => {
   const search = useSearch({ strict: false });
