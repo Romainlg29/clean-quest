@@ -6,7 +6,7 @@ const Root = () => (
   <div className="w-dvw h-dvh flex flex-col overflow-hidden">
     <Outlet />
 
-    <Toaster />
+    <Toaster position="top-center" />
   </div>
 );
 
