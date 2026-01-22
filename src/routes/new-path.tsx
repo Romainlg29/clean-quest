@@ -3,10 +3,12 @@ import UserCurrentPositionMarker from "@/components/domain/map/user-current-posi
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import Map, { Layer, Source } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { CameraIcon, PauseIcon, PlayIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const Index = () => {
   const [has_started, set_has_started] = useState(false);
@@ -42,7 +44,15 @@ const Index = () => {
     };
   }, [has_started, is_paused]);
 
-  const capture = () => {};
+  const capture = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    console.log(file);
+  };
 
   return (
     <div className="relative w-full h-full flex flex-col">
@@ -82,13 +92,28 @@ const Index = () => {
           </Button>
         ) : null}
 
-        <Button
-          variant={"secondary"}
-          className="flex-none size-14 rounded-full"
-          onClick={capture}
+        <Input
+          id="camera-input"
+          name="camera-input"
+          className="invisible absolute w-0 h-0 p-0 m-0"
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={capture}
+        />
+
+        <Label
+          htmlFor="camera-input"
+          className="flex-none m-0 p-0 cursor-pointer"
         >
-          <CameraIcon className="size-4" />
-        </Button>
+          <Button
+            type="button"
+            variant={"secondary"}
+            className="flex-none size-14 rounded-full pointer-events-none"
+          >
+            <CameraIcon className="size-4" />
+          </Button>
+        </Label>
       </Card>
 
       <Map style={{ borderRadius: "var(--radius)" }}>
