@@ -42,6 +42,8 @@ const Index = () => {
     };
   }, [has_started, is_paused]);
 
+  const capture = () => {};
+
   return (
     <div className="relative w-full h-full flex flex-col">
       <Card className="absolute z-10 bottom-0 left-0 w-full h-24 rounded-b-none px-2 py-4 flex flex-row gap-2">
@@ -83,6 +85,7 @@ const Index = () => {
         <Button
           variant={"secondary"}
           className="flex-none size-14 rounded-full"
+          onClick={capture}
         >
           <CameraIcon className="size-4" />
         </Button>
