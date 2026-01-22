@@ -35,7 +35,7 @@ const UserTracesMarker = () => {
           longitude={position ? position[0] : 0}
           latitude={position ? position[1] : 0}
         >
-          <div className="bg-background p-2 flex flex-col gap-2">
+          <div className="bg-background p-2 flex flex-col gap-2 rounded-2xl cursor-none">
             {features.map((feature, index) => (
               <div key={index}>
                 <p>{feature.properties?.username}</p>
