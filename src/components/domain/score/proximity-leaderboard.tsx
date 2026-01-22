@@ -75,7 +75,8 @@ const ProximityLeaderboard = () => {
                       index === 2 ? "bg-yellow-200 text-yellow-900" : "",
                     )}
                   >
-                    {entry.score} pts / lvl. {Math.max(entry.score % 100, 1)}
+                    {entry.score} pts / lvl.{" "}
+                    {Math.floor(Math.max(entry.score % 1000, 1))}
                   </SidebarMenuBadge>
                 </SidebarMenuSubItem>
               );
