@@ -23,6 +23,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import UserTraces from "@/components/domain/map/user-traces";
 import { api } from "@/lib/api";
 import EventList from "@/components/domain/events/event-list";
+import UserTracesMarker from "@/components/domain/map/user-traces-marker";
 
 const Home = () => {
   const context = useRouteContext({
@@ -134,6 +135,7 @@ const Home = () => {
             <FitToPosition />
 
             <UserTraces />
+            <UserTracesMarker />
           </Map>
         </main>
       </SidebarInset>
