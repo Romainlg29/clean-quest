@@ -36,11 +36,24 @@ const UserTracesMarker = () => {
           latitude={position ? position[1] : 0}
         >
           <div className="bg-background p-2 flex flex-col gap-2 rounded-2xl cursor-none">
-            {features.map((feature, index) => (
-              <div key={index}>
-                <p>{feature.properties?.username}</p>
-              </div>
-            ))}
+            {features
+              // Extract unique usernames from features
+              .reduce<string[]>((acc, feature) => {
+                const username = feature.properties?.username;
+
+                if (username && !acc.includes(username)) {
+                  acc.push(username);
+                }
+
+                return acc;
+              }, [])
+
+              // Display each username only once
+              .map((username) => (
+                <div key={username}>
+                  <p>{username}</p>
+                </div>
+              ))}
           </div>
         </Marker>
       ) : null}
