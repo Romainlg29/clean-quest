@@ -22,7 +22,7 @@ const Index = () => {
   // Store the previous coordinate to mesure the average speed
   const previous = useRef<GeolocationPosition | null>(null);
 
-  const { mutateAsync: create } = useNewPath();
+  const { mutateAsync: create, isPending } = useNewPath();
 
   const navigate = useNavigate();
 
@@ -143,6 +143,7 @@ const Index = () => {
             variant={"destructive"}
             className="flex-1 h-14 rounded-4xl"
             onClick={() => submit()}
+            disabled={isPending}
           >
             Terminer la collecte
           </Button>
