@@ -199,7 +199,7 @@ const Index = () => {
         </Label>
       </Card>
 
-      <Map style={{ borderRadius: "var(--radius)" }}>
+      <Map>
         <Source
           type="raster"
           tiles={["https://tile.openstreetmap.org/{z}/{x}/{y}.png"]}
