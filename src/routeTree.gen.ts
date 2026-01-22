@@ -9,17 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as NewPathRouteImport } from './routes/new-path'
 import { Route as LogOutRouteImport } from './routes/log-out'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 
-const WelcomeRoute = WelcomeRouteImport.update({
-  id: '/welcome',
-  path: '/welcome',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const NewPathRoute = NewPathRouteImport.update({
   id: '/new-path',
   path: '/new-path',
@@ -46,14 +40,12 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/log-out': typeof LogOutRoute
   '/new-path': typeof NewPathRoute
-  '/welcome': typeof WelcomeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/log-out': typeof LogOutRoute
   '/new-path': typeof NewPathRoute
-  '/welcome': typeof WelcomeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,14 +53,13 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/log-out': typeof LogOutRoute
   '/new-path': typeof NewPathRoute
-  '/welcome': typeof WelcomeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/log-out' | '/new-path' | '/welcome'
+  fullPaths: '/' | '/auth' | '/log-out' | '/new-path'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/log-out' | '/new-path' | '/welcome'
-  id: '__root__' | '/' | '/auth' | '/log-out' | '/new-path' | '/welcome'
+  to: '/' | '/auth' | '/log-out' | '/new-path'
+  id: '__root__' | '/' | '/auth' | '/log-out' | '/new-path'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,18 +67,10 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   LogOutRoute: typeof LogOutRoute
   NewPathRoute: typeof NewPathRoute
-  WelcomeRoute: typeof WelcomeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/welcome': {
-      id: '/welcome'
-      path: '/welcome'
-      fullPath: '/welcome'
-      preLoaderRoute: typeof WelcomeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/new-path': {
       id: '/new-path'
       path: '/new-path'
@@ -124,7 +107,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   LogOutRoute: LogOutRoute,
   NewPathRoute: NewPathRoute,
-  WelcomeRoute: WelcomeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

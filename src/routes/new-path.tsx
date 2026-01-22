@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useNewPath } from "@/hooks/use-new-path";
 import { toast } from "sonner";
 import * as turf from "@turf/turf";
+import { Spinner } from "@/components/ui/spinner";
 
 const Index = () => {
   const [has_started, set_has_started] = useState(false);
@@ -145,7 +146,7 @@ const Index = () => {
             onClick={() => submit()}
             disabled={isPending}
           >
-            Terminer la collecte
+            {isPending ? <Spinner /> : "Terminer la collecte"}
           </Button>
         ) : (
           <Button
