@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 RUN bun i
 
-ENV VITE_APP_API_BASE_URL=https://cleanquest.romain-legall.fr/api
+ENV VITE_APP_API_BASE_URL=https://cleanquest.romain-legall.fr
 
 RUN bun --bun run build
 
