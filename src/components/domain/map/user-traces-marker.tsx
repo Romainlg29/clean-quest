@@ -35,7 +35,7 @@ const UserTracesMarker = () => {
           longitude={position ? position[0] : 0}
           latitude={position ? position[1] : 0}
         >
-          <div className="bg-background p-2 flex flex-col gap-2 rounded-2xl cursor-none">
+          <div className="bg-background px-4 py-2 flex flex-col gap-2 rounded-2xl cursor-none">
             {features
               // Extract unique usernames from features
               .reduce<string[]>((acc, feature) => {
